@@ -18,7 +18,7 @@ final class Str extends Term {
   }
 
   @override
-  Val eval() {
+  Val eval(Map<String, Term> stack) {
     return value;
   }
 }

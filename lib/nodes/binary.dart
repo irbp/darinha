@@ -25,7 +25,7 @@ class Binary extends Term {
   }
 
   @override
-  Val eval() {
-    return op.eval(lhs, rhs);
+  Val eval(Map<String, Term> stack) {
+    return op.eval(lhs, rhs, stack);
   }
 }

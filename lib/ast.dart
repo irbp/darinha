@@ -12,6 +12,7 @@ class AST {
   final String name;
   final Term expression;
   final Location location;
+  final Map<String, Term> stack = {};
 
   factory AST.fromMap(Map<String, dynamic> map) {
     return AST._(
@@ -22,6 +23,6 @@ class AST {
   }
 
   Val eval() {
-    return expression.eval();
+    return expression.eval(stack);
   }
 }

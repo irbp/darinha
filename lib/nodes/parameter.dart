@@ -2,23 +2,23 @@ import 'package:rinha_de_compiler_dart/nodes/location.dart';
 import 'package:rinha_de_compiler_dart/nodes/term.dart';
 import 'package:rinha_de_compiler_dart/val.dart';
 
-final class Int extends Term {
-  Int({
+final class Parameter extends Term {
+  Parameter({
+    required this.text,
     required super.location,
-    required this.value,
   });
 
-  final IntVal value;
+  final String text;
 
-  factory Int.fromMap(Map<String, dynamic> map) {
-    return Int(
+  factory Parameter.fromMap(Map<String, dynamic> map) {
+    return Parameter(
+      text: map['text'],
       location: Location.fromMap(map['location']),
-      value: IntVal(value: map['value']),
     );
   }
 
   @override
   Val eval(Map<String, Term> stack) {
-    return value;
+    return VoidVal();
   }
 }

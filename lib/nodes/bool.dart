@@ -18,7 +18,7 @@ final class Bool extends Term {
   }
 
   @override
-  Val eval() {
+  Val eval(Map<String, Term> stack) {
     return value;
   }
 }

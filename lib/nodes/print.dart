@@ -18,8 +18,8 @@ final class Print extends Term {
   }
 
   @override
-  Val eval() {
-    final val = value.eval();
+  Val eval(Map<String, Term> stack) {
+    final val = value.eval(stack);
     switch (val) {
       case StrVal():
         print(val.value);
