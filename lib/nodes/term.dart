@@ -1,3 +1,5 @@
+import 'package:rinha_de_compiler_dart/nodes/binary.dart';
+import 'package:rinha_de_compiler_dart/nodes/bool.dart';
 import 'package:rinha_de_compiler_dart/nodes/int.dart';
 import 'package:rinha_de_compiler_dart/nodes/location.dart';
 import 'package:rinha_de_compiler_dart/nodes/print.dart';
@@ -15,9 +17,11 @@ abstract class Term {
     final kind = map['kind'];
     return switch (kind) {
       'Print' => Print.fromMap(map),
+      'Binary' => Binary.fromMap(map),
       'Str' => Str.fromMap(map),
       'Int' => Int.fromMap(map),
-      _ => throw Exception()
+      'Bool' => Bool.fromMap(map),
+      _ => throw AssertionError('Unrecognized node: $kind')
     };
   }
 
