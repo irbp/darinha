@@ -1,5 +1,6 @@
 import 'package:rinha_de_compiler_dart/nodes/binary.dart';
 import 'package:rinha_de_compiler_dart/nodes/bool.dart';
+import 'package:rinha_de_compiler_dart/nodes/if.dart';
 import 'package:rinha_de_compiler_dart/nodes/int.dart';
 import 'package:rinha_de_compiler_dart/nodes/let.dart';
 import 'package:rinha_de_compiler_dart/nodes/location.dart';
@@ -27,6 +28,7 @@ abstract class Term {
       'Let' => Let.fromMap(map),
       'Parameter' => Parameter.fromMap(map),
       'Var' => Var.fromMap(map),
+      'If' => If.fromMap(map),
       _ => throw AssertionError('Unrecognized node: $kind')
     };
   }
