@@ -1,5 +1,4 @@
-import 'package:rinha_de_compiler_dart/nodes/term.dart';
-import 'package:rinha_de_compiler_dart/val.dart';
+import 'package:rinha_de_compiler_dart/ast/val.dart';
 
 sealed class BinaryOp {
   factory BinaryOp.fromOpcode(String opcode) {
@@ -21,14 +20,12 @@ sealed class BinaryOp {
     };
   }
 
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack);
+  Val operate(Val lhsVal, Val rhsVal);
 }
 
 final class Add implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is StrVal && rhsVal is StrVal) {
       return StrVal(value: '${lhsVal.value}${rhsVal.value}');
     }
@@ -47,9 +44,7 @@ final class Add implements BinaryOp {
 
 final class Sub implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is IntVal && rhsVal is IntVal) {
       return IntVal(value: lhsVal.value - rhsVal.value);
     }
@@ -59,9 +54,7 @@ final class Sub implements BinaryOp {
 
 final class Mul implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is IntVal && rhsVal is IntVal) {
       return IntVal(value: lhsVal.value * rhsVal.value);
     }
@@ -71,9 +64,7 @@ final class Mul implements BinaryOp {
 
 final class Div implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is IntVal && rhsVal is IntVal) {
       return IntVal(value: lhsVal.value ~/ rhsVal.value);
     }
@@ -83,9 +74,7 @@ final class Div implements BinaryOp {
 
 final class Rem implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is IntVal && rhsVal is IntVal) {
       return IntVal(value: lhsVal.value % rhsVal.value);
     }
@@ -95,27 +84,21 @@ final class Rem implements BinaryOp {
 
 final class Eq implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     return BoolVal(value: lhsVal.equals(rhsVal));
   }
 }
 
 final class Neq implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     return BoolVal(value: !lhsVal.equals(rhsVal));
   }
 }
 
 final class Lt implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is IntVal && rhsVal is IntVal) {
       return BoolVal(value: lhsVal.value < rhsVal.value);
     }
@@ -125,9 +108,7 @@ final class Lt implements BinaryOp {
 
 final class Gt implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is IntVal && rhsVal is IntVal) {
       return BoolVal(value: lhsVal.value > rhsVal.value);
     }
@@ -137,9 +118,7 @@ final class Gt implements BinaryOp {
 
 final class Lte implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is IntVal && rhsVal is IntVal) {
       return BoolVal(value: lhsVal.value <= rhsVal.value);
     }
@@ -149,9 +128,7 @@ final class Lte implements BinaryOp {
 
 final class Gte implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is IntVal && rhsVal is IntVal) {
       return BoolVal(value: lhsVal.value >= rhsVal.value);
     }
@@ -161,9 +138,7 @@ final class Gte implements BinaryOp {
 
 final class And implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is BoolVal && rhsVal is BoolVal) {
       return BoolVal(value: lhsVal.value && rhsVal.value);
     }
@@ -173,9 +148,7 @@ final class And implements BinaryOp {
 
 final class Or implements BinaryOp {
   @override
-  Val eval(Term lhs, Term rhs, Map<String, Term> stack) {
-    final lhsVal = lhs.eval(stack);
-    final rhsVal = rhs.eval(stack);
+  Val operate(Val lhsVal, Val rhsVal) {
     if (lhsVal is BoolVal && rhsVal is BoolVal) {
       return BoolVal(value: lhsVal.value || rhsVal.value);
     }

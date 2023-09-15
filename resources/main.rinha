@@ -1,8 +1,10 @@
 let a = 10;
-let b = 20;
-let c = if (a != b) {
-    b
-} else {
+let a = a + 10;
+let b = 30;
+let c = if (a < b) {
+    let a = b * 2;
     a
+} else {
+    "A é maior ou igual!"
 };
-print(c)
+print(c + a)
