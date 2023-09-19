@@ -2,6 +2,7 @@ import 'package:rinha_de_compiler_dart/ast/ast.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/binary_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/bool_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/call_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/first_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/function_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/if_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/int_node.dart';
@@ -9,7 +10,9 @@ import 'package:rinha_de_compiler_dart/ast/nodes/let_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/parameter_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/print_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/second_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/str_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/tuple_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/var_node.dart';
 import 'package:rinha_de_compiler_dart/ast/val.dart';
 import 'package:rinha_de_compiler_dart/call_stack.dart';
@@ -37,6 +40,9 @@ class Interpreter {
       IfNode() => _visitIfNode(node),
       FunctionNode() => _visitFunctionNode(node),
       CallNode() => _visitCallNode(node),
+      TupleNode() => _visitTupleNode(node),
+      FirstNode() => _visitFirstNode(node),
+      SecondNode() => _visitSecondNode(node),
       _ => throw AssertionError(
           'file: ${node.location.filename}, '
           'position: ${node.location.start}: invalid node',
@@ -58,16 +64,7 @@ class Interpreter {
 
   Val _visitPrintNode(PrintNode node) {
     final val = _visitNode(node.value);
-    switch (val) {
-      case StrVal():
-        print(val.value);
-      case IntVal():
-        print("${val.value}");
-      case BoolVal():
-        print("${val.value}");
-      default:
-        throw Exception('Error at: ${node.location.start}');
-    }
+    print(val);
     return val;
   }
 
@@ -146,5 +143,28 @@ class Interpreter {
       callStack.pop();
     }
     return calleeResult;
+  }
+
+  Val _visitTupleNode(TupleNode node) {
+    return TupleVal(
+      first: _visitNode(node.first),
+      second: _visitNode(node.second),
+    );
+  }
+
+  Val _visitFirstNode(FirstNode node) {
+    final visitedNode = _visitNode(node.value);
+    if (visitedNode is! TupleVal) {
+      throw AssertionError('first() function should be called with a tuple!');
+    }
+    return visitedNode.first;
+  }
+
+  Val _visitSecondNode(SecondNode node) {
+    final visitedNode = _visitNode(node.value);
+    if (visitedNode is! TupleVal) {
+      throw AssertionError('second() function should be called with a tuple!');
+    }
+    return visitedNode.second;
   }
 }

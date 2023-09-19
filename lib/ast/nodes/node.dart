@@ -1,6 +1,7 @@
 import 'package:rinha_de_compiler_dart/ast/nodes/binary_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/bool_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/call_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/first_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/function_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/if_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/int_node.dart';
@@ -8,7 +9,9 @@ import 'package:rinha_de_compiler_dart/ast/nodes/let_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/location.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/parameter_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/print_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/second_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/str_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/tuple_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/var_node.dart';
 
 abstract class Node {
@@ -32,6 +35,9 @@ abstract class Node {
       'If' => IfNode.fromMap(map),
       'Function' => FunctionNode.fromMap(map),
       'Call' => CallNode.fromMap(map),
+      'Tuple' => TupleNode.fromMap(map),
+      'First' => FirstNode.fromMap(map),
+      'Second' => SecondNode.fromMap(map),
       _ => throw AssertionError('Unrecognized node: $kind')
     };
   }
