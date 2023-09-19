@@ -1,2 +1,8 @@
-let func = fn(a, b) => a + b;
-print(func)
+let fibCTO = fn(n, sum, prev) => {
+    if (n < 2) {
+        sum
+    } else {
+        fibCTO(n - 1, sum + prev, sum)
+    }
+};
+print(fibCTO(50, 1, 0))
