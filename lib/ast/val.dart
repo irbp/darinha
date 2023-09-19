@@ -8,14 +8,6 @@ sealed class Val {
   String toString();
 }
 
-final class VoidVal extends Val {
-  @override
-  bool equals(Val other) => other is VoidVal;
-
-  @override
-  String toString() => 'Void';
-}
-
 final class IntVal extends Val {
   IntVal({required this.value});
 

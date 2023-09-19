@@ -8,7 +8,6 @@ import 'package:rinha_de_compiler_dart/ast/nodes/if_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/int_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/let_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/node.dart';
-import 'package:rinha_de_compiler_dart/ast/nodes/parameter_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/print_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/second_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/str_node.dart';
@@ -36,7 +35,6 @@ class Interpreter {
       PrintNode() => _visitPrintNode(node, memory),
       BinaryNode() => _visitBinaryNode(node, memory),
       LetNode() => _visitLetNode(node, memory),
-      ParameterNode() => _visitParameterNode(node, memory),
       VarNode() => _visitVarNode(node, memory),
       IfNode() => _visitIfNode(node, memory),
       FunctionNode() => _visitFunctionNode(node, memory),
@@ -81,10 +79,6 @@ class Interpreter {
     final scopeMemory = Memory.from(memory);
     scopeMemory[node.name.text] = letValue;
     return _visitNode(node.next, scopeMemory);
-  }
-
-  Val _visitParameterNode(ParameterNode node, Memory memory) {
-    return VoidVal();
   }
 
   Val _visitVarNode(VarNode node, Memory memory) {

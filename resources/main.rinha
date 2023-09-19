@@ -5,4 +5,4 @@ let fibCTO = fn(n, sum, prev) => {
         fibCTO(n - 1, sum + prev, sum)
     }
 };
-print(fibCTO(50, 1, 0))
+print(fibCTO(10, 1, 0))
