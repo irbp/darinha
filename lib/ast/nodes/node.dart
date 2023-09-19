@@ -1,5 +1,7 @@
 import 'package:rinha_de_compiler_dart/ast/nodes/binary_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/bool_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/call_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/function_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/if_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/int_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/let_node.dart';
@@ -28,6 +30,8 @@ abstract class Node {
       'Parameter' => ParameterNode.fromMap(map),
       'Var' => VarNode.fromMap(map),
       'If' => IfNode.fromMap(map),
+      'Function' => FunctionNode.fromMap(map),
+      'Call' => CallNode.fromMap(map),
       _ => throw AssertionError('Unrecognized node: $kind')
     };
   }

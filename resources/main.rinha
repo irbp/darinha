@@ -1,10 +1,9 @@
-let a = 10;
-let a = a + 10;
-let b = 30;
-let c = if (a < b) {
-    let a = b * 2;
-    a
-} else {
-    "A é maior ou igual!"
+let fib = fn (n) => {
+  if (n < 2) {
+    n
+  } else {
+    fib(n - 1) + fib(n - 2)
+  }
 };
-print(c + a)
+
+print(fib(10))

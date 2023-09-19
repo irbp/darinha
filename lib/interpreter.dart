@@ -1,6 +1,8 @@
 import 'package:rinha_de_compiler_dart/ast/ast.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/binary_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/bool_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/call_node.dart';
+import 'package:rinha_de_compiler_dart/ast/nodes/function_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/if_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/int_node.dart';
 import 'package:rinha_de_compiler_dart/ast/nodes/let_node.dart';
@@ -33,6 +35,8 @@ class Interpreter {
       ParameterNode() => _visitParameterNode(node),
       VarNode() => _visitVarNode(node),
       IfNode() => _visitIfNode(node),
+      FunctionNode() => _visitFunctionNode(node),
+      CallNode() => _visitCallNode(node),
       _ => throw AssertionError(
           'file: ${node.location.filename}, '
           'position: ${node.location.start}: invalid node',
@@ -58,13 +62,13 @@ class Interpreter {
       case StrVal():
         print(val.value);
       case IntVal():
-        print(val.value);
+        print("${val.value}");
       case BoolVal():
-        print(val.value);
+        print("${val.value}");
       default:
         throw Exception('Error at: ${node.location.start}');
     }
-    return VoidVal();
+    return val;
   }
 
   Val _visitBinaryNode(BinaryNode node) {
@@ -106,5 +110,41 @@ class Interpreter {
     } else {
       return _visitNode(node.otherwise);
     }
+  }
+
+  Val _visitFunctionNode(FunctionNode node) {
+    return ClosureVal(
+      body: node.value,
+      parameters: node.parameters,
+    );
+  }
+
+  Val _visitCallNode(CallNode node) {
+    final callee = _visitNode(node.callee);
+    if (callee is! ClosureVal) {
+      throw AssertionError('Invalid function!');
+    }
+    final parametersLength = callee.parameters.length;
+    final argumentsLength = node.arguments.length;
+    if (parametersLength != argumentsLength) {
+      throw AssertionError(
+        '$parametersLength arguments expected, but $argumentsLength found.',
+      );
+    }
+    for (int i = 0; i < parametersLength; i++) {
+      final parameter = callee.parameters[i];
+      final argument = node.arguments[i];
+      final callStack = _memory[parameter.text] ?? CallStack();
+      final value = _visitNode(argument);
+      callStack.push(value);
+      _memory[parameter.text] = callStack;
+    }
+    final calleeResult = _visitNode(callee.body);
+    for (int i = 0; i < parametersLength; i++) {
+      final parameter = callee.parameters[i];
+      final callStack = _memory[parameter.text] ?? CallStack();
+      callStack.pop();
+    }
+    return calleeResult;
   }
 }
