@@ -11,7 +11,6 @@ class AST {
   final String name;
   final Node program;
   final Location location;
-  final Map<String, Node> stack = {};
 
   factory AST.fromMap(Map<String, dynamic> map) {
     return AST._(
