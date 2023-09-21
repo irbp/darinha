@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:rinha_de_compiler_dart/ast/ast.dart';
+import 'ast/ast.dart';
 
 class Parser {
   Parser({required String filePath}) : _filePath = filePath;

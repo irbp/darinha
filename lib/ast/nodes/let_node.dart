@@ -1,6 +1,6 @@
-import 'package:rinha_de_compiler_dart/ast/nodes/location.dart';
-import 'package:rinha_de_compiler_dart/ast/nodes/node.dart';
-import 'package:rinha_de_compiler_dart/ast/nodes/parameter_node.dart';
+import 'location.dart';
+import 'node.dart';
+import 'parameter_node.dart';
 
 final class LetNode extends Node {
   LetNode({

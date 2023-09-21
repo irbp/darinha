@@ -1,6 +1,6 @@
-import 'package:rinha_de_compiler_dart/ast/nodes/binary_op.dart';
-import 'package:rinha_de_compiler_dart/ast/nodes/location.dart';
-import 'package:rinha_de_compiler_dart/ast/nodes/node.dart';
+import 'binary_op.dart';
+import 'location.dart';
+import 'node.dart';
 
 class BinaryNode extends Node {
   BinaryNode({

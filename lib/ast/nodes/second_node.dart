@@ -1,5 +1,5 @@
-import 'package:rinha_de_compiler_dart/ast/nodes/location.dart';
-import 'package:rinha_de_compiler_dart/ast/nodes/node.dart';
+import 'location.dart';
+import 'node.dart';
 
 final class SecondNode extends Node {
   SecondNode({

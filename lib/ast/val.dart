@@ -1,5 +1,5 @@
-import 'package:rinha_de_compiler_dart/ast/nodes/node.dart';
-import 'package:rinha_de_compiler_dart/ast/nodes/parameter_node.dart';
+import 'nodes/node.dart';
+import 'nodes/parameter_node.dart';
 
 sealed class Val {
   bool equals(Val other);

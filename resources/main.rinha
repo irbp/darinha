@@ -1,8 +1,0 @@
-let fibCTO = fn(n, sum, prev) => {
-    if (n < 2) {
-        sum
-    } else {
-        fibCTO(n - 1, sum + prev, sum)
-    }
-};
-print(fibCTO(10, 1, 0))

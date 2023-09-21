@@ -1,4 +1,4 @@
-import 'package:rinha_de_compiler_dart/ast/val.dart';
+import '../val.dart';
 
 sealed class BinaryOp {
   factory BinaryOp.fromOpcode(String opcode) {

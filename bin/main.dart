@@ -1,5 +1,5 @@
-import 'package:rinha_de_compiler_dart/interpreter.dart';
-import 'package:rinha_de_compiler_dart/parser.dart';
+import 'package:darinha/interpreter.dart';
+import 'package:darinha/parser.dart';
 
 void main(List<String> arguments) {
   if (arguments.isEmpty) {
