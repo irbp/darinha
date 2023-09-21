@@ -8,5 +8,6 @@ RUN apt-get update && \
     apt-get update && \
     apt-get -y install dart && \
     echo 'export PATH="$PATH:/usr/lib/dart/bin"' >> ~/.profile && \
-    dart compile exe bin/main.dart -o bin/main
-ENTRYPOINT ["./bin/main", "/var/rinha/source.rinha.json"]
+    dart pub get && \
+    dart compile exe bin/main.dart -o bin/darinha
+ENTRYPOINT ["./bin/darinha", "/var/rinha/source.rinha.json"]
