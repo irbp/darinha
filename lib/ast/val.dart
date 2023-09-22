@@ -1,3 +1,4 @@
+import '../interpreter.dart';
 import 'nodes/node.dart';
 import 'nodes/parameter_node.dart';
 
@@ -48,16 +49,19 @@ final class ClosureVal extends Val {
   ClosureVal({
     required this.body,
     required this.parameters,
+    required this.stack,
   });
 
   final Node body;
   final List<ParameterNode> parameters;
+  final Stack stack;
 
   @override
   bool equals(Val other) {
     return other is ClosureVal &&
         other.body == body &&
-        other.parameters == parameters;
+        other.parameters == parameters &&
+        other.stack == stack;
   }
 
   @override
